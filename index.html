@@ -235,7 +235,7 @@
     const ADMIN_ID = "admin";
 
     // ★ 본인의 구글 웹앱 URL 주소를 여기에 꼭 붙여넣으세요!
-    const GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycbz2Za3YGbt7XF63j8z38yDBuNu2FAJVP4Ro7Rvpbr8CgHHNfmU4Rq03u1kdP2XtOMOJ/exec";
+    const GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycbwXPSAKAEngA1LnAJSW3jhaqzvzaCCpm9wgMmRL_Tug-IHNdjvLfNVKyXTBhuJF4DjR/exec";
 
     let currentName = "";
 
@@ -278,45 +278,42 @@
         }
     }
 
-    function submitData() {
-        const choice = finalChoice.value;
-        if(!choice) { alert("가져갈 번호를 선택해 주세요!"); return; }
+ function submitData() {
+    const choice = finalChoice.value;
+    if(!choice) { alert("가져갈 번호를 선택해 주세요!"); return; }
 
-        document.getElementById('send-btn').innerText = "선착순 및 중복 검증 중...";
-        document.getElementById('send-btn').disabled = true;
+    document.getElementById('send-btn').innerText = "선착순 및 중복 검증 중...";
+    document.getElementById('send-btn').disabled = true;
 
-        fetch(GOOGLE_API_URL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name: currentName, choice: choice })
-        }).then(() => {
-            setTimeout(verifySubmission, 1500);
-        }).catch(err => {
-            alert("통신 에러가 발생했습니다.");
+    // GET 방식으로 파라미터를 안전하게 전달하여 CORS 에러 완전 회피
+    const requestUrl = `${GOOGLE_API_URL}?name=${encodeURIComponent(currentName)}&choice=${encodeURIComponent(choice)}`;
+
+    fetch(requestUrl)
+    .then(res => res.json())
+    .then(data => {
+        if (data.result === "success") {
+            // 매칭 성공 시 마니또 타겟 이름을 즉시 화면에 표출
+            document.getElementById('manito-target-name').innerText = data.owner;
+            document.getElementById('quiz-view').style.display = 'none';
+            document.getElementById('success-view').style.display = 'block';
+        } else if (data.result === "already_fail") {
+            alert("이미 마니또 선택을 완료하셨습니다! 중복 참여는 불가능합니다.");
+            location.reload();
+        } else if (data.result === "self_fail") {
+            alert("자신의 고민 목소리는 선택할 수 없습니다!");
             resetButton();
-        });
-    }
+        } else if (data.result === "soldout_fail") {
+            alert("아쉽게도 방금 다른 팀원이 선착순으로 가져간 번호입니다!");
+            resetButton();
+        }
+    })
+    .catch(err => {
+        alert("통신 에러가 발생했습니다. 구글 API 주소 또는 배포 권한을 확인하세요.");
+        resetButton();
+    });
+}
 
-    function verifySubmission() {
-        fetch(GOOGLE_API_URL)
-        .then(res => res.json())
-        .then(data => {
-            // 내가 찌른 번호로 제대로 안착했는지 구글 시트 데이터 기입 여부 교차 조회
-            const record = data.find(row => row.name === currentName && row.choice == finalChoice.value);
 
-            if (record) {
-                // 검증 성공 시 화면에 마니또 타겟 이름 바인딩 후 표출
-                document.getElementById('manito-target-name').innerText = record.target;
-                document.getElementById('quiz-view').style.display = 'none';
-                document.getElementById('success-view').style.display = 'block';
-            } else {
-                // 서버 단에서 1인 1회 제한에 걸렸거나 본인 목소리 매칭 거부, 혹은 선착순 충돌 시
-                alert("선택 실패: 이미 참여 이력이 존재하여 중복 시도가 거부되었거나, 다른 사람이 먼저 채간 선착순 번호, 혹은 본인의 목소리 번호입니다.");
-                resetButton();
-            }
-        });
-    }
 
     function resetButton() {
         document.getElementById('send-btn').innerText = "이 번호 선착순 찜하기";
