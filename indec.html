@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마니또 선착순 블라인드 드롭</title>
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #121214;
+            color: #e1e1e6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background-color: #202024;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        }
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            color: #ff4a4a;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #a8a8b3;
+            margin-bottom: 25px;
+        }
+        .intro-box {
+            background-color: #29292e;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            border-left: 4px solid #ff4a4a;
+        }
+        .input-group {
+            margin-bottom: 25px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            color: #a8a8b3;
+            margin-bottom: 8px;
+        }
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            background-color: #29292e;
+            border: 1px solid #323238;
+            border-radius: 6px;
+            color: #e1e1e6;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .input-field:focus {
+            border-color: #ff4a4a;
+            outline: none;
+        }
+        .audio-list {
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid #323238;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 25px;
+            background-color: #19191c;
+        }
+        .audio-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 12px;
+            border-bottom: 1px solid #29292e;
+        }
+        .audio-item:last-child {
+            border-bottom: none;
+        }
+        .audio-info {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffb6c1;
+        }
+        audio {
+            width: 100%;
+            height: 32px;
+        }
+        .selection-zone {
+            margin-bottom: 25px;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            background-color: #29292e;
+            border: 1px solid #323238;
+            border-radius: 6px;
+            color: #e1e1e6;
+            font-size: 15px;
+        }
+        .submit-btn, .action-btn {
+            background-color: #ff4a4a;
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        .submit-btn:hover, .action-btn:hover {
+            background-color: #e03e3e;
+        }
+        #quiz-view, #success-view, #admin-view {
+            display: none;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 25px;
+            text-align: left;
+            font-size: 14px;
+        }
+        .admin-table th, .admin-table td {
+            padding: 12px;
+            border-bottom: 1px solid #323238;
+        }
+        .admin-table th {
+            background-color: #29292e;
+            color: #ff4a4a;
+        }
+        .no-data {
+            text-align: center;
+            color: #a8a8b3;
+            font-style: italic;
+            padding: 20px;
+        }
+        .highlight-box {
+            background-color: #19191c;
+            border: 2px dashed #ff4a4a;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 1단계: 로그인 입장 -->
+    <div id="login-view">
+        <h1>☎️ 마니또 블라인드 드롭 ☎️</h1>
+        <div class="subtitle">연극 &lt;전화벨이 울린다&gt; 기획즈 선착순 매칭</div>
+        <div class="intro-box">
+            <b>[선착순 매칭 안내]</b> <br>
+            누군가의 마음속 '빨간불(고민)' 목소리가 보관되어 있습니다. <br>
+            실명을 정확히 입력한 후 입장하여 번호를 선택해 주세요. <br>
+            이미 다른 사람이 찜한 번호나 본인의 목소리 번호는 선택할 수 없습니다!
+        </div>
+        <div class="input-group">
+            <label for="user-name">이름 입력 (실명)</label>
+            <input type="text" id="user-name" class="input-field" placeholder="예: 홍길동">
+        </div>
+        <button class="submit-btn" onclick="checkUser()">입장하기</button>
+    </div>
+
+    <!-- 2단계: 선착순 투표 창 -->
+    <div id="quiz-view">
+        <h1>🚨 고민 목소리 선착순 가져가기</h1>
+        <div class="subtitle" id="user-welcome"></div>
+        <div class="audio-list" id="audio-container"></div>
+
+        <div class="selection-zone">
+            <label style="display:block; font-size:13px; color:#a8a8b3; margin-bottom:6px;">가져갈 고민 번호 선택</label>
+            <select id="final-choice">
+                <option value="">-- 번호 선택 --</option>
+            </select>
+        </div>
+        <button class="submit-btn" id="send-btn" onclick="submitData()">이 번호 선착순 찜하기</button>
+    </div>
+
+    <!-- 3단계: 완료 안내 및 마니또 이름 공개 창 (★요청하신 기능 반영) -->
+    <div id="success-view">
+        <h1 style="color: #4bb543;">✓ 선착순 매칭 성공!</h1>
+        <div class="intro-box" style="border-left-color: #4bb543; margin-top: 20px; text-align: center;">
+            축하합니다! 해당 번호가 당신의 마니또로 안전하게 확정되었습니다.<br>
+            당신이 챙겨야 할 비밀 마니또의 주인은 바로 아래의 팀원입니다.
+
+            <div class="highlight-box">
+                당신의 마니또: <span id="manito-target-name" style="color: #ffb6c1; font-weight: bold;"></span> 님
+            </div>
+
+            마니또 기간 동안 상대방 몰래 그 고민을 따뜻하게 챙겨주세요!
+        </div>
+        <button class="action-btn" onclick="location.reload()">처음으로 돌아가기</button>
+    </div>
+
+    <!-- 4단계: 관리자 실시간 현황 창 -->
+    <div id="admin-view">
+        <h1>📊 마니또 수합 현황 (선착순)</h1>
+        <div class="subtitle">누가 누구를 매칭받았는지 실시간으로 모아보는 창</div>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>제출 시간</th>
+                    <th>팀원 이름</th>
+                    <th>가져간 번호</th>
+                    <th>지정된 마니또 상대</th>
+                </tr>
+            </thead>
+            <tbody id="admin-table-body">
+                <tr><td colspan="4" class="no-data">데이터 로딩 중...</td></tr>
+            </tbody>
+        </table>
+        <button class="action-btn" onclick="location.reload()">로그아웃</button>
+    </div>
+</div>
+
+<script>
+    const TOTAL_MEMBERS = 22;
+    const ADMIN_ID = "admin";
+
+    // ★ 본인의 구글 웹앱 URL 주소를 여기에 꼭 붙여넣으세요!
+    const GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycbz2Za3YGbt7XF63j8z38yDBuNu2FAJVP4Ro7Rvpbr8CgHHNfmU4Rq03u1kdP2XtOMOJ/exec";
+
+    let currentName = "";
+
+    const audioContainer = document.getElementById('audio-container');
+    const finalChoice = document.getElementById('final-choice');
+    for (let i = 1; i <= TOTAL_MEMBERS; i++) {
+        const item = document.createElement('div');
+        item.className = 'audio-item';
+        item.innerHTML = `<div class="audio-info">🚨 비밀 고민 팩: ${i}번</div><audio controls src="audio/voice_${i}.mp3" preload="none"></audio>`;
+        audioContainer.appendChild(item);
+
+        const opt = document.createElement('option'); opt.value = i; opt.innerText = `${i}번 고민`; finalChoice.appendChild(opt);
+    }
+
+    function checkUser() {
+        const input = document.getElementById('user-name').value.trim();
+        if(!input) { alert("이름을 입력해주세요!"); return; }
+
+        if(input === ADMIN_ID) {
+            showAdminDashboard();
+        } else {
+            currentName = input;
+
+            // 입장 시 1차적으로 이미 참여 완료한 사람인지 실시간 체크 (중복 시도 방지)
+            fetch(GOOGLE_API_URL)
+            .then(res => res.json())
+            .then(data => {
+                const alreadyDone = data.find(row => row.name === currentName);
+                if (alreadyDone) {
+                    alert("이미 마니또 선택을 완료하셨습니다! 중복 참여는 불가능하며, 당신의 마니또 상대는 [" + alreadyDone.target + "] 님입니다.");
+                    location.reload();
+                } else {
+                    document.getElementById('login-view').style.display = 'none';
+                    document.getElementById('quiz-view').style.display = 'block';
+                    document.getElementById('user-welcome').innerText = `${currentName} 팀원님, 선착순 마니또를 확보하세요!`;
+                }
+            }).catch(() => {
+                alert("연동 오류가 발생했습니다. 구글 API 주소를 확인하세요.");
+            });
+        }
+    }
+
+    function submitData() {
+        const choice = finalChoice.value;
+        if(!choice) { alert("가져갈 번호를 선택해 주세요!"); return; }
+
+        document.getElementById('send-btn').innerText = "선착순 및 중복 검증 중...";
+        document.getElementById('send-btn').disabled = true;
+
+        fetch(GOOGLE_API_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: currentName, choice: choice })
+        }).then(() => {
+            setTimeout(verifySubmission, 1500);
+        }).catch(err => {
+            alert("통신 에러가 발생했습니다.");
+            resetButton();
+        });
+    }
+
+    function verifySubmission() {
+        fetch(GOOGLE_API_URL)
+        .then(res => res.json())
+        .then(data => {
+            // 내가 찌른 번호로 제대로 안착했는지 구글 시트 데이터 기입 여부 교차 조회
+            const record = data.find(row => row.name === currentName && row.choice == finalChoice.value);
+
+            if (record) {
+                // 검증 성공 시 화면에 마니또 타겟 이름 바인딩 후 표출
+                document.getElementById('manito-target-name').innerText = record.target;
+                document.getElementById('quiz-view').style.display = 'none';
+                document.getElementById('success-view').style.display = 'block';
+            } else {
+                // 서버 단에서 1인 1회 제한에 걸렸거나 본인 목소리 매칭 거부, 혹은 선착순 충돌 시
+                alert("선택 실패: 이미 참여 이력이 존재하여 중복 시도가 거부되었거나, 다른 사람이 먼저 채간 선착순 번호, 혹은 본인의 목소리 번호입니다.");
+                resetButton();
+            }
+        });
+    }
+
+    function resetButton() {
+        document.getElementById('send-btn').innerText = "이 번호 선착순 찜하기";
+        document.getElementById('send-btn').disabled = false;
+    }
+
+    function showAdminDashboard() {
+        document.getElementById('login-view').style.display = 'none';
+        document.getElementById('admin-view').style.display = 'block';
+
+        fetch(GOOGLE_API_URL)
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('admin-table-body');
+            tbody.innerHTML = "";
+            if(data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="no-data">아직 제출된 데이터가 없습니다.</td></tr>`;
+                return;
+            }
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${row.time}</td><td><b>${row.name}</b></td><td>${row.choice}번 고민</td><td style="color:#ff4a4a; font-weight:bold;">${row.target} 님</td>`;
+                tbody.appendChild(tr);
+            });
+        }).catch(err => {
+            document.getElementById('admin-table-body').innerHTML = `<tr><td colspan="4" class="no-data" style="color:red;">API 로드 실패.</td></tr>`;
+        });
+    }
+</script>
+</body>
+</html>
