@@ -164,7 +164,7 @@
     <!-- 1단계: 로그인 입장 -->
     <div id="login-view">
         <h1>☎️ 마니또 블라인드 드롭 ☎️</h1>
-        <div class="subtitle">연극 &lt;전화벨이 울린다&gt; 기획즈 선착순 매칭</div>
+        <div class="subtitle">팀 &lt;라인&gt; 선착순 매칭</div>
         <div class="intro-box">
             <b>[선착순 매칭 안내]</b> <br>
             누군가의 마음속 '빨간불(고민)' 목소리가 보관되어 있습니다. <br>
@@ -173,14 +173,14 @@
         </div>
         <div class="input-group">
             <label for="user-name">이름 입력 (실명)</label>
-            <input type="text" id="user-name" class="input-field" placeholder="예: 홍길동">
+            <input type="text" id="user-name" class="input-field" placeholder="예: 홍길동 (홍 길동, 길동홍 등등 불가능)">
         </div>
         <button class="submit-btn" onclick="checkUser()">입장하기</button>
     </div>
 
     <!-- 2단계: 선착순 투표 창 -->
     <div id="quiz-view">
-        <h1>🚨 고민 목소리 선착순 가져가기</h1>
+        <h1>🚨 고민 목소리 가져가기</h1>
         <div class="subtitle" id="user-welcome"></div>
         <div class="audio-list" id="audio-container"></div>
 
@@ -195,7 +195,7 @@
 
     <!-- 3단계: 완료 안내 및 마니또 이름 공개 창 (★요청하신 기능 반영) -->
     <div id="success-view">
-        <h1 style="color: #4bb543;">✓ 선착순 매칭 성공!</h1>
+        <h1 style="color: #4bb543;">✓매칭 성공!</h1>
         <div class="intro-box" style="border-left-color: #4bb543; margin-top: 20px; text-align: center;">
             축하합니다! 해당 번호가 당신의 마니또로 안전하게 확정되었습니다.<br>
             당신이 챙겨야 할 비밀 마니또의 주인은 바로 아래의 팀원입니다.
@@ -235,7 +235,7 @@
 </div>
 
 <script>
-    const TOTAL_MEMBERS = 22;
+    const TOTAL_MEMBERS = 20;
     const ADMIN_ID = "admin";
 
     // ★ 본인의 구글 웹앱 URL 주소를 여기에 꼭 붙여넣으세요!
@@ -274,7 +274,7 @@ function checkUser() {
     
     // 2. [추가된 기능] 등록된 팀원 명단에 있는지 체크
     if (!VALID_MEMBERS.includes(input)) {
-        alert("등록되지 않은 이름입니다. 극단 팀원 실명을 정확하게 다시 입력해 주세요.");
+        alert("등록되지 않은 이름입니다. 팀 라인 여러분 실명을 정확하게 다시 입력해 주세요.");
         document.getElementById('user-name').value = ""; // 입력창 비우기
         return;
     }
