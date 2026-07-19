@@ -200,14 +200,14 @@
         <!-- 1단계: 로그인 입장 -->
         <div id="login-view">
             <div class="intro-box">
-                <b>[선착순 매칭 안내]</b> <br>
+                <b>[마니또 매칭 안내]</b> <br>
                 누군가의 마음속 '빨간불(고민)' 목소리가 보관되어 있습니다. <br>
-                실명을 정확히 입력한 후 입장하여 번호를 선택해 주세요. <br>
-                이미 다른 사람이 찜한 번호나 본인의 목소리 번호는 선택할 수 없습니다!
+                실명을 정확히 입력한 후 입장하여 목소리를 듣고 번호를 선택해 주세요. <br>
+                이미 다른 사람이 찜한 목소리나 본인의 목소리는 선택할 수 없습니다!
             </div>
             <div class="input-group">
                 <label for="user-name">이름 입력 (실명)</label>
-                <input type="text" id="user-name" class="input-field" placeholder="예: 홍길동 (띄어쓰기 없이 입력)">
+                <input type="text" id="user-name" class="input-field" placeholder="예: 홍길동 (이름 석 자 띄어쓰기 없이 입력!!)">
             </div>
             <button class="submit-btn" onclick="checkUser()">입장하기</button>
         </div>
@@ -222,7 +222,7 @@
                     <option value="">-- 번호 선택 --</option>
                 </select>
             </div>
-            <button class="submit-btn" id="send-btn" onclick="submitData()">이 번호 선착순 찜하기</button>
+            <button class="submit-btn" id="send-btn" onclick="submitData()">이 번호 찜하기</button>
         </div>
 
         <!-- 3단계: 완료 안내 및 마니또 이름 공개 창 -->
@@ -235,7 +235,7 @@
                     당신의 마니또: <span id="manito-target-name" style="color: #e52521; font-weight: 800;"></span> 님
                 </div>
 
-                마니또 기간 동안 상대방 몰래 그 고민을 따뜻하게 챙겨주세요!
+                마니또 기간 동안 상대방 몰래 따뜻하게 챙겨주세요!
             </div>
             <button class="action-btn" onclick="location.reload()" style="background-color: #2b8a3e; box-shadow: 0 4px 12px rgba(43, 138, 62, 0.2);">처음으로 돌아가기</button>
         </div>
@@ -309,7 +309,7 @@ function checkUser() {
     .then(data => {
         const alreadyDone = data.find(row => row.name === currentName);
         if (alreadyDone) {
-            alert("이미 마니또 선택을 완료하셨습니다! 중복 참여는 불가능하며, 당신의 마니또 상대는 [" + alreadyDone.target + "] 님입니다.");
+            alert("이미 마니또 선택을 완료하셨습니다! 중복 참여는 불가능해요. 혹시 자신의 마니또가 누군지 잊었다면 기획에게 문의하세요ㄱ-");
             location.reload();
         } else {
             document.getElementById('login-view').style.display = 'none';
