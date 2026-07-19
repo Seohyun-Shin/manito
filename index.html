@@ -7,8 +7,8 @@
     <style>
         body {
             font-family: 'Pretendard', sans-serif;
-            background-color: #453535;
-            color: #e2e2f2;
+            background-color: #f4f6f9; /* 배경은 깔끔하고 시원한 연그레이 */
+            color: #1a1c1e;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -17,33 +17,44 @@
             min-height: 100vh;
         }
         .container {
-            max-width: 600px;
+            max-width: 500px;
             width: 100%;
-            background-color: #faeaea;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            background-color: #ffffff;
+            border-radius: 24px; /* 앱 디자인처럼 둥글고 트렌디한 모서리 */
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+            overflow: hidden; /* 상단 레드 바가 둥근 모서리에 잘리도록 설정 */
         }
-        h1 {
-            font-size: 24px;
+        /* 앱 화면처럼 상단을 강렬한 레드로 채우는 헤더 */
+        .app-header {
+            background-color: #e52521; /* 선명하고 강렬한 레드 */
+            color: #ffffff;
+            padding: 35px 25px 25px 25px;
             text-align: center;
-            color: #ff4a4a;
-            margin-bottom: 5px;
         }
-        .subtitle {
-            text-align: center;
+        .app-header h1 {
+            font-size: 26px;
+            margin: 0 0 8px 0;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .app-header .subtitle {
             font-size: 14px;
-            color: #a8a8b3;
-            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.85);
+            margin: 0;
+            font-weight: 400;
+        }
+        .app-content {
+            padding: 25px;
         }
         .intro-box {
-            background-color: #29292e;
-            padding: 15px;
-            border-radius: 8px;
+            background-color: #fff1f0; /* 연하고 깨끗한 핑크빛 미색 바탕 */
+            color: #e52521; /* 텍스트도 레드 포인트 */
+            padding: 16px;
+            border-radius: 16px;
             font-size: 14px;
             line-height: 1.6;
             margin-bottom: 25px;
-            border-left: 4px solid #ff4a4a;
+            font-weight: 500;
         }
         .input-group {
             margin-bottom: 25px;
@@ -51,77 +62,93 @@
         .input-group label {
             display: block;
             font-size: 14px;
-            color: #a8a8b3;
-            margin-bottom: 8px;
+            color: #495057;
+            margin-bottom: 10px;
+            font-weight: 600;
         }
         .input-field {
             width: 100%;
-            padding: 12px;
-            background-color: #29292e;
-            border: 1px solid #323238;
-            border-radius: 6px;
-            color: #e1e1e6;
+            padding: 14px 16px;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            color: #1a1c1e;
             font-size: 16px;
             box-sizing: border-box;
+            transition: all 0.2s;
         }
         .input-field:focus {
-            border-color: #ff4a4a;
+            border-color: #e52521;
+            background-color: #ffffff;
             outline: none;
+            box-shadow: 0 0 0 3px rgba(229, 37, 33, 0.1);
         }
         .audio-list {
             max-height: 250px;
             overflow-y: auto;
-            border: 1px solid #323238;
-            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            border-radius: 16px;
             padding: 10px;
             margin-bottom: 25px;
-            background-color: #19191c;
+            background-color: #ffffff;
         }
         .audio-item {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            padding: 12px;
-            border-bottom: 1px solid #29292e;
+            gap: 10px;
+            padding: 14px;
+            border-bottom: 1px solid #f1f3f5;
+            background-color: #ffffff;
         }
         .audio-item:last-child {
             border-bottom: none;
         }
         .audio-info {
             font-size: 14px;
-            font-weight: bold;
-            color: #ffb6c1;
+            font-weight: 700;
+            color: #e52521; /* 오디오 타이틀도 레드 로고 효과 */
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         audio {
             width: 100%;
-            height: 32px;
+            height: 36px;
         }
         .selection-zone {
             margin-bottom: 25px;
         }
         select {
             width: 100%;
-            padding: 12px;
-            background-color: #29292e;
-            border: 1px solid #323238;
-            border-radius: 6px;
-            color: #e1e1e6;
+            padding: 14px 16px;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            color: #1a1c1e;
             font-size: 15px;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        select:focus {
+            border-color: #e52521;
+            background-color: #ffffff;
         }
         .submit-btn, .action-btn {
-            background-color: #ff4a4a;
+            background-color: #e52521; /* 선명한 레드 버튼 */
             color: #ffffff;
             border: none;
-            padding: 14px;
-            border-radius: 6px;
+            padding: 16px;
+            border-radius: 14px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
             width: 100%;
             transition: background 0.2s;
+            box-shadow: 0 4px 12px rgba(229, 37, 33, 0.2);
         }
         .submit-btn:hover, .action-btn:hover {
-            background-color: #e03e3e;
+            background-color: #c41e1a;
         }
         #quiz-view, #success-view, #admin-view {
             display: none;
@@ -135,110 +162,110 @@
             font-size: 14px;
         }
         .admin-table th, .admin-table td {
-            padding: 12px;
-            border-bottom: 1px solid #323238;
+            padding: 14px 12px;
+            border-bottom: 1px solid #e9ecef;
         }
         .admin-table th {
-            background-color: #29292e;
-            color: #ff4a4a;
+            background-color: #f8f9fa;
+            color: #495057;
+            font-weight: 700;
         }
         .no-data {
             text-align: center;
-            color: #a8a8b3;
+            color: #adb5bd;
             font-style: italic;
-            padding: 20px;
+            padding: 30px;
         }
         .highlight-box {
-            background-color: #19191c;
-            border: 2px dashed #ff4a4a;
+            background-color: #ffffff;
+            border: 2px solid #e52521;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 16px;
             margin: 20px 0;
             font-size: 18px;
+            color: #1a1c1e;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- 1단계: 로그인 입장 -->
-    <div id="login-view">
-        <h1>☎️ 마니또 블라인드 드롭 ☎️</h1>
-        <div class="subtitle">팀 &lt;라인&gt; 선착순 매칭</div>
-        <div class="intro-box">
-            <b>[선착순 매칭 안내]</b> <br>
-            누군가의 마음속 '빨간불(고민)' 목소리가 보관되어 있습니다. <br>
-            실명을 정확히 입력한 후 입장하여 번호를 선택해 주세요. <br>
-            이미 다른 사람이 찜한 번호나 본인의 목소리 번호는 선택할 수 없습니다!
-        </div>
-        <div class="input-group">
-            <label for="user-name">이름 입력 (실명)</label>
-            <input type="text" id="user-name" class="input-field" placeholder="예: 홍길동 (홍 길동, 길동홍 등등 불가능)">
-        </div>
-        <button class="submit-btn" onclick="checkUser()">입장하기</button>
+    <!-- 앱 스타일 레이아웃을 위한 헤더 정의 -->
+    <div class="app-header">
+        <h1 id="main-title">☎️ 마니또 블라인드 드롭 ☎️</h1>
+        <div class="subtitle" id="main-subtitle">팀 &lt;라인&gt; 선착순 매칭</div>
     </div>
 
-    <!-- 2단계: 선착순 투표 창 -->
-    <div id="quiz-view">
-        <h1>🚨 고민 목소리 가져가기</h1>
-        <div class="subtitle" id="user-welcome"></div>
-        <div class="audio-list" id="audio-container"></div>
-
-        <div class="selection-zone">
-            <label style="display:block; font-size:13px; color:#a8a8b3; margin-bottom:6px;">가져갈 고민 번호 선택</label>
-            <select id="final-choice">
-                <option value="">-- 번호 선택 --</option>
-            </select>
-        </div>
-        <button class="submit-btn" id="send-btn" onclick="submitData()">이 번호 선착순 찜하기</button>
-    </div>
-
-    <!-- 3단계: 완료 안내 및 마니또 이름 공개 창 (★요청하신 기능 반영) -->
-    <div id="success-view">
-        <h1 style="color: #4bb543;">✓매칭 성공!</h1>
-        <div class="intro-box" style="border-left-color: #4bb543; margin-top: 20px; text-align: center;">
-            축하합니다! 해당 번호가 당신의 마니또로 안전하게 확정되었습니다.<br>
-            당신이 챙겨야 할 비밀 마니또의 주인은 바로 아래의 팀원입니다.
-
-            <div class="highlight-box">
-                당신의 마니또: <span id="manito-target-name" style="color: #ffb6c1; font-weight: bold;"></span> 님
+    <div class="app-content">
+        <!-- 1단계: 로그인 입장 -->
+        <div id="login-view">
+            <div class="intro-box">
+                <b>[선착순 매칭 안내]</b> <br>
+                누군가의 마음속 '빨간불(고민)' 목소리가 보관되어 있습니다. <br>
+                실명을 정확히 입력한 후 입장하여 번호를 선택해 주세요. <br>
+                이미 다른 사람이 찜한 번호나 본인의 목소리 번호는 선택할 수 없습니다!
             </div>
-
-            마니또 기간 동안 상대방 몰래 그 고민을 따뜻하게 챙겨주세요!
+            <div class="input-group">
+                <label for="user-name">이름 입력 (실명)</label>
+                <input type="text" id="user-name" class="input-field" placeholder="예: 홍길동 (띄어쓰기 없이 입력)">
+            </div>
+            <button class="submit-btn" onclick="checkUser()">입장하기</button>
         </div>
-        <button class="action-btn" onclick="location.reload()">처음으로 돌아가기</button>
-    </div>
 
-    <!-- 4단계: 관리자 실시간 현황 창 -->
-    <div id="admin-view">
-        <h1>📊 마니또 수합 현황 (선착순)</h1>
-        <div class="subtitle">누가 누구를 매칭받았는지 실시간으로 모아보는 창</div>
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>제출 시간</th>
-                    <th>팀원 이름</th>
-                    <th>가져간 번호</th>
-                    <th>지정된 마니또 상대</th>
-                </tr>
-            </thead>
-            <tbody id="admin-table-body">
-                <tr><td colspan="4" class="no-data">데이터 로딩 중...</td></tr>
-            </tbody>
-        </table>
-        <!-- 로그아웃 버튼 바로 위에 추가해 주세요 -->
-<button class="action-btn" onclick="clearGoogleSheet()" style="background-color: #29292e; border: 1px solid #323238; color: #a8a8b3; margin-bottom: 10px;">
-    데이터베이스 전체 초기화 (구글 시트 포맷)
-</button>
-        <button class="action-btn" onclick="location.reload()">로그아웃</button>
+        <!-- 2단계: 선착순 투표 창 -->
+        <div id="quiz-view">
+            <div class="audio-list" id="audio-container"></div>
+
+            <div class="selection-zone">
+                <label style="display:block; font-size:13px; color:#495057; margin-bottom:8px; font-weight:600;">가져갈 고민 번호 선택</label>
+                <select id="final-choice">
+                    <option value="">-- 번호 선택 --</option>
+                </select>
+            </div>
+            <button class="submit-btn" id="send-btn" onclick="submitData()">이 번호 선착순 찜하기</button>
+        </div>
+
+        <!-- 3단계: 완료 안내 및 마니또 이름 공개 창 -->
+        <div id="success-view">
+            <div class="intro-box" style="background-color: #f1f9f5; color: #1e4620; text-align: center;">
+                축하합니다! 해당 번호가 당신의 마니또로 안전하게 확정되었습니다.<br>
+                당신이 챙겨야 할 비밀 마니또의 주인은 바로 아래의 팀원입니다.
+
+                <div class="highlight-box" style="border-color: #2b8a3e; background-color: #ffffff;">
+                    당신의 마니또: <span id="manito-target-name" style="color: #e52521; font-weight: 800;"></span> 님
+                </div>
+
+                마니또 기간 동안 상대방 몰래 그 고민을 따뜻하게 챙겨주세요!
+            </div>
+            <button class="action-btn" onclick="location.reload()" style="background-color: #2b8a3e; box-shadow: 0 4px 12px rgba(43, 138, 62, 0.2);">처음으로 돌아가기</button>
+        </div>
+
+        <!-- 4단계: 관리자 실시간 현황 창 -->
+        <div id="admin-view">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>제출 시간</th>
+                        <th>팀원 이름</th>
+                        <th>가져간 번호</th>
+                        <th>지정된 마니또 상대</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-table-body">
+                    <tr><td colspan="4" class="no-data">데이터 로딩 중...</td></tr>
+                </tbody>
+            </table>
+            <button class="action-btn" onclick="clearGoogleSheet()" style="background-color: #ffffff; border: 1px solid #dee2e6; color: #495057; box-shadow: none; margin-bottom: 10px;">
+                데이터베이스 전체 초기화 (구글 시트 포맷)
+            </button>
+            <button class="action-btn" onclick="location.reload()">로그아웃</button>
+        </div>
     </div>
 </div>
 
 <script>
     const TOTAL_MEMBERS = 20;
     const ADMIN_ID = "admin";
-
-    // ★ 본인의 구글 웹앱 URL 주소를 여기에 꼭 붙여넣으세요!
     const GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycbyo-GsDFhfw7DzxxWs5OVf4mLb41PNHJeXpHhwjKk2r6CynL5dZWq_4wxwHnwJknzan/exec";
 
     let currentName = "";
@@ -254,32 +281,28 @@
         const opt = document.createElement('option'); opt.value = i; opt.innerText = `${i}번 고민`; finalChoice.appendChild(opt);
     }
 
-    // 등록된 22명의 실제 팀원 이름 목록 (구글 스크립트와 동일하게 맞춤)
-const VALID_MEMBERS = [
-   "이혜민",  "송은결",  "김지교",  "권정은",  "신서현",
-   "이다온", "고은비", "남하영", "김채원",  "이지수",
-   "이다홍",  "김지호",  "성현규",  "김수연",  "이나영",
-   "조아라",  "이현지",  "전세윤" , "조건우",  "이현서",
-];
+    const VALID_MEMBERS = [
+       "이혜민",  "송은결",  "김지교",  "권정은",  "신서현",
+       "이다온", "고은비", "남하영", "김채원",  "이지수",
+       "이다홍",  "김지호",  "성현규",  "김수연",  "이나영",
+       "조아라",  "이현지",  "전세윤" , "조건우",  "이현서",
+    ];
 
 function checkUser() {
     const input = document.getElementById('user-name').value.trim();
     if(!input) { alert("이름을 입력해주세요!"); return; }
 
-    // 1. 관리자 아이디 체크
     if(input === ADMIN_ID) {
         showAdminDashboard();
         return;
     } 
     
-    // 2. [추가된 기능] 등록된 팀원 명단에 있는지 체크
     if (!VALID_MEMBERS.includes(input)) {
         alert("등록되지 않은 이름입니다. 팀 라인 여러분 실명을 정확하게 다시 입력해 주세요.");
-        document.getElementById('user-name').value = ""; // 입력창 비우기
+        document.getElementById('user-name').value = "";
         return;
     }
 
-    // 3. 명단 확인 통과 시 기존 중복 참여 체크 진행
     currentName = input;
     fetch(GOOGLE_API_URL)
     .then(res => res.json())
@@ -291,29 +314,32 @@ function checkUser() {
         } else {
             document.getElementById('login-view').style.display = 'none';
             document.getElementById('quiz-view').style.display = 'block';
-            document.getElementById('user-welcome').innerText = `${currentName} 팀원님, 선착순 마니또를 확보하세요!`;
+            
+            // 헤더 텍스트 실시간 매칭 타이틀 변경 반영
+            document.getElementById('main-title').innerText = "🚨 선착순 찜하기 진행 중";
+            document.getElementById('main-subtitle').innerText = `${currentName} 팀원님의 마니또 선택 창`;
         }
     }).catch(() => {
         alert("연동 오류가 발생했습니다. 구글 API 주소를 확인하세요.");
     });
 }
-   
-
- function submitData() {
+    
+function submitData() {
     const choice = finalChoice.value;
     if(!choice) { alert("가져갈 번호를 선택해 주세요!"); return; }
 
     document.getElementById('send-btn').innerText = "선착순 및 중복 검증 중...";
     document.getElementById('send-btn').disabled = true;
 
-    // GET 방식으로 파라미터를 안전하게 전달하여 CORS 에러 완전 회피
     const requestUrl = `${GOOGLE_API_URL}?name=${encodeURIComponent(currentName)}&choice=${encodeURIComponent(choice)}`;
 
     fetch(requestUrl)
     .then(res => res.json())
     .then(data => {
         if (data.result === "success") {
-            // 매칭 성공 시 마니또 타겟 이름을 즉시 화면에 표출
+            document.getElementById('main-title').innerText = "🎉 매칭 성공 완료";
+            document.getElementById('main-subtitle').innerText = "확정된 비밀 타겟을 확인하세요";
+            
             document.getElementById('manito-target-name').innerText = data.owner;
             document.getElementById('quiz-view').style.display = 'none';
             document.getElementById('success-view').style.display = 'block';
@@ -334,14 +360,15 @@ function checkUser() {
     });
 }
 
-
-
     function resetButton() {
         document.getElementById('send-btn').innerText = "이 번호 선착순 찜하기";
         document.getElementById('send-btn').disabled = false;
     }
 
     function showAdminDashboard() {
+        document.getElementById('main-title').innerText = "📊 마니또 수합 대시보드";
+        document.getElementById('main-subtitle').innerText = "관리자 모드 실시간 수합 현황";
+        
         document.getElementById('login-view').style.display = 'none';
         document.getElementById('admin-view').style.display = 'block';
 
@@ -356,7 +383,7 @@ function checkUser() {
             }
             data.forEach(row => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${row.time}</td><td><b>${row.name}</b></td><td>${row.choice}번 고민</td><td style="color:#ff4a4a; font-weight:bold;">${row.target} 님</td>`;
+                tr.innerHTML = `<td>${row.time}</td><td><b>${row.name}</b></td><td>${row.choice}번 고민</td><td style="color:#e52521; font-weight:700;">${row.target} 님</td>`;
                 tbody.appendChild(tr);
             });
         }).catch(err => {
@@ -378,7 +405,7 @@ function checkUser() {
         .then(data => {
             if (data.result === "clear_success") {
                 alert("구글 시트의 기록 데이터가 성공적으로 초기화되었습니다! 이제 처음부터 다시 매칭을 시작할 수 있습니다.");
-                showAdminDashboard(); // 관리자 표 새로고침
+                showAdminDashboard();
             } else {
                 alert("초기화 처리 중 서버 오류가 발생했습니다.");
             }
