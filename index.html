@@ -282,7 +282,7 @@
     }
 
     const VALID_MEMBERS = [
-       "이혜민",  "송은결",  "김지교",  "권정은", "조건우"
+       "이혜민",  "송은결",  "김지교",  "권정은", "조건우",
        "이다온", "고은비", "남하영", "김채원",  "이지수",
        "이다홍",  "김지호",  "성현규",  "김수연",  "이나영",
        "조아라",  "이현지",  "전세윤" , "이현서",
@@ -309,8 +309,7 @@ function checkUser() {
     .then(data => {
         const alreadyDone = data.find(row => row.name === currentName);
         if (alreadyDone) {
-            alert("이미 마니또 선택을 완료하셨습니다! 중복 참여는 불가능해요. <br>
-                  혹시 자신의 마니또가 누군지 잊었다면 기획에게 문의하세요ㄱ-");
+            alert("이미 마니또 선택을 완료하셨습니다! 중복 참여는 불가능해요. 혹시 자신의 마니또가 누군지 잊었다면 기획에게 문의하세요ㄱ-");
             location.reload();
         } else {
             document.getElementById('login-view').style.display = 'none';
