@@ -309,7 +309,7 @@ function checkUser() {
     .then(data => {
         const alreadyDone = data.find(row => row.name === currentName);
         if (alreadyDone) {
-            alert("이미 마니또 선택을 완료하셨습니다! 중복 참여는 불가능해요. 혹시 자신의 마니또가 누군지 잊었다면 기획에게 문의하세요ㄱ-");
+            alert("이미 마니또 선택을 완료하셨습니다! 중복 참여는 불가능해요. <br> 혹시 자신의 마니또가 누군지 잊었다면 기획에게 문의하세요ㄱ-");
             location.reload();
         } else {
             document.getElementById('login-view').style.display = 'none';
