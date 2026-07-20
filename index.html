@@ -316,8 +316,8 @@ function checkUser() {
             document.getElementById('quiz-view').style.display = 'block';
             
             // 헤더 텍스트 실시간 매칭 타이틀 변경 반영
-            document.getElementById('main-title').innerText = `${currentName} 팀원님의 마니또 선택 창;
-            document.getElementById('main-subtitle').innerText = "모든 음성은 AI로 변조된 목소리입니다!;
+            document.getElementById('main-title').innerText = `${currentName} 팀원님의 마니또 선택 창`;
+            document.getElementById('main-subtitle').innerText = "모든 음성은 AI로 변조된 목소리입니다!";
         }
     }).catch(() => {
         alert("연동 오류가 발생했습니다. 구글 API 주소를 확인하세요.");
@@ -350,7 +350,7 @@ function submitData() {
             alert("자신의 고민 목소리는 선택할 수 없습니다!");
             resetButton();
         } else if (data.result === "soldout_fail") {
-            alert("아쉽게도 방금 다른 팀원이 선착순으로 가져간 번호입니다!");
+            alert("아쉽게도 방금 다른 팀원이 먼저 가져간 번호입니다!");
             resetButton();
         }
     })
